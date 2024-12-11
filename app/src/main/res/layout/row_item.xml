@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/row_background">
+
+    <GridLayout
+        android:id="@+id/gameDataTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:columnCount="4"
+        android:background="@color/row_background">
+
+        <TextView
+            android:id="@+id/roundText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:gravity="center"
+            android:textSize="@dimen/text_size"
+            android:text="@string/round_num"
+            android:textColor="@color/row_text_color"
+            android:layout_marginStart="5dp" />
+
+        <EditText
+            android:id="@+id/team1Input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="2"
+            android:autofillHints=""
+            android:hint="@string/team1"
+            android:gravity="center"
+            android:inputType="text"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/row_text_color"
+            android:background="@android:color/transparent"
+            android:textColorHint="@color/hint_text_color" />
+
+        <EditText
+            android:id="@+id/team2Input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:layout_columnWeight="2"
+            android:autofillHints=""
+            android:textSize="@dimen/text_size"
+            android:gravity="center"
+            android:hint="@string/team2"
+            android:inputType="text"
+            android:textColor="@color/row_text_color"
+            android:background="@android:color/transparent"
+            android:textColorHint="@color/hint_text_color" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="1"
+            android:gravity="center"
+            android:textSize="@dimen/text_size"
+            android:text="@string/delete"
+            android:backgroundTint="@color/delete_button_color"
+            android:textColor="#FFFFFF"
+            android:padding="0dp"
+            android:layout_marginStart="5dp"/>
+    </GridLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color" />
+</LinearLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CalWin</string>
+    <string name="round">No</string>
+    <string name="delete">Delete</string>
+    <string name="team1">Team 1</string>
+    <string name="team2">Team 2</string>
+    <string name="round_num">1</string>
+    <string name="result1">Team 1: 0</string>
+    <string name="result2">Team 2: 0</string>
+    <string name="_u">-</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+</resources>
