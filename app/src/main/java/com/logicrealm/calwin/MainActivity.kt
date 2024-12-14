@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,9 @@ class MainActivity : AppCompatActivity() {
     private var team2Total = 0
     private var team1Name = "Team 1"
     private var team2Name = "Team 2"
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var clearBtn: Button
+    private lateinit var saveBtn: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,12 +60,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-//        val gameDataList = loadData(this)
-//
-//        for (gameData in gameDataList) {
-//            addRowToTable(gameData)
-//        }
 
         recyclerView = findViewById(R.id.tableRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -77,22 +75,39 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val saveButton: Button = findViewById(R.id.saveButton)
+        clearBtn = findViewById(R.id.clearButton)
+        clearBtn.setOnClickListener {
+            adapter.clearRows()
+            Toast.makeText(this, "Rounds Cleared", Toast.LENGTH_SHORT).show()
+        }
 
-//        saveButton.setOnClickListener {
-//            val gameDataListToSave = mutableListOf<GameData>()
+
+        // TODO: Save Functionality
+        saveBtn = findViewById(R.id.saveButton)
+
+        saveBtn.setOnClickListener {
+            Toast.makeText(this, "This feature will be implemented in future", Toast.LENGTH_SHORT).show()
+//            saveData(this)
+////            val gameDataListToSave = mutableListOf<GameData>()
+////
+////            // Iterate through rows in the adapter and save data
+////            for (i in adapter.rows.indices) {
+////                val rowData = adapter.rows[i]
+////                val round = i + 1 // Round number (1-based)
+////                val gameData = GameData(round, rowData.team1Score, rowData.team2Score)
+////                gameDataListToSave.add(gameData)
+////            }
+////
+////            // Save the data
+////            saveData(this, gameDataListToSave)
+////            Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show()
+        }
+
+//        val gameDataList = loadData(this)
+//        Log.d("Got Data", gameDataList.toString())
 //
-//            // Iterate through rows in the adapter and save data
-//            for (i in adapter.rows.indices) {
-//                val rowData = adapter.rows[i]
-//                val round = i + 1 // Round number (1-based)
-//                val gameData = GameData(round, rowData.team1Score, rowData.team2Score)
-//                gameDataListToSave.add(gameData)
-//            }
-//
-//            // Save the data
-//            saveData(this, gameDataListToSave)
-//            Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show()
+//        for (gameData in gameDataList) {
+//            addRowToTable(gameData)
 //        }
 
         updateTotals()
@@ -116,20 +131,25 @@ class MainActivity : AppCompatActivity() {
         gameDataTable.addView(newRow)
     }
 
-    private fun saveData(context: Context, data: List<GameData>) {
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
+    private fun saveData(context: Context) {
+        // TODO: for loop to get full data of recycler view
+
+        val data = intArrayOf(7,7)
+
+        sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
         val gson = Gson()
         val json = gson.toJson(data)
 
+        Log.d("Json Data", json)
+
         editor.putString("game_data", json)
         editor.apply()
     }
 
-    private fun loadData(context: Context): List<GameData> {
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-
+    private fun loadData(context: Context) {
+        sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
         val json = sharedPreferences.getString("game_data", "[]")
 
         val gson = Gson()
@@ -201,7 +221,7 @@ class RowAdapter(private val onRowUpdated: () -> Unit) :
 
     override fun getItemCount(): Int = rows.size
 
-    fun addRow(): Boolean {
+    fun addRow(score1: String = "", score2: String = ""): Boolean {
         // Validate last row before adding a new one
         if (rows.isNotEmpty()) {
             val lastRow = rows.last()
@@ -210,9 +230,15 @@ class RowAdapter(private val onRowUpdated: () -> Unit) :
             }
         }
 
-        rows.add(RowData("", ""))
+        rows.add(RowData(score1, score2))
         notifyItemInserted(rows.size - 1)
         return true
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun clearRows() {
+        rows.clear()
+        notifyDataSetChanged()
     }
 
 }

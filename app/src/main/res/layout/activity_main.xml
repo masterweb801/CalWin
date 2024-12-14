@@ -104,12 +104,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/save"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/header_background"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:paddingVertical="12dp"
-                android:paddingHorizontal="50dp"/>
+                android:paddingHorizontal="30dp"/>
 
             <Button
                 android:id="@+id/addRowButton"
@@ -117,11 +117,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add"
+                android:layout_marginEnd="20dp"
                 android:backgroundTint="@color/header_background"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:paddingVertical="12dp"
-                android:paddingHorizontal="50dp"/>
+                android:paddingHorizontal="30dp"/>
+
+            <Button
+                android:id="@+id/clearButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/clear"
+                android:backgroundTint="@color/header_background"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="30dp"/>
         </LinearLayout>
 
         <LinearLayout
