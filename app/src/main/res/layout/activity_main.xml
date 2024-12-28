@@ -1,175 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:id="@+id/main">
 
-    <LinearLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="#f5f5f5">
-
-        <TextView
-            android:id="@+id/logoText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textColor="#000" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingTop="8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <GridLayout
+            <!-- Custom Toolbar with TextView -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:columnCount="4"
-                android:background="@color/header_background">
+                android:background="@color/colorPrimary">
 
                 <TextView
+                    android:id="@+id/logoText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/round"
+                    android:text="@string/app_name"
+                    android:textSize="24sp"
                     android:textStyle="bold"
-                    android:textColor="@color/header_text_color"
-                    android:layout_columnSpan="1"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:textColor="#fff"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
-                    android:layout_columnWeight="2"
-                    android:text="Team-1"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/header_text_color"
-                    tools:ignore="HardcodedText"
-                    android:layout_gravity="center" />
+            </androidx.appcompat.widget.Toolbar>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_columnSpan="1"
-                    android:layout_columnWeight="2"
-                    android:text="Team-2"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="@color/header_text_color"
-                    tools:ignore="HardcodedText"
-                    android:layout_gravity="center" />
+            <FrameLayout
+                android:id="@+id/frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/_u"
-                    android:textStyle="bold"
-                    android:textColor="@color/header_text_color"
-                    android:layout_columnSpan="1"
-                    android:layout_columnWeight="2"
-                    android:layout_gravity="center" />
-            </GridLayout>
-
-            <!-- Table Content (Placeholder for RecyclerView) -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/tableRecyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:background="#f5f5f5"
+                    tools:ignore="UselessParent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginTop="15dp">
+
+                        <GridLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:columnCount="4"
+                            android:background="#C1D">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/round"
+                                android:textStyle="bold"
+                                android:textColor="@color/header_text_color"
+                                android:layout_columnSpan="1"
+                                android:layout_gravity="center" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_columnSpan="1"
+                                android:layout_columnWeight="2"
+                                android:text="@string/team1"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/header_text_color"
+                                android:layout_gravity="center" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_columnSpan="1"
+                                android:layout_columnWeight="2"
+                                android:text="@string/team2"
+                                android:gravity="center"
+                                android:textStyle="bold"
+                                android:textColor="@color/header_text_color"
+                                android:layout_gravity="center" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/_u"
+                                android:textStyle="bold"
+                                android:textColor="@color/header_text_color"
+                                android:layout_columnSpan="1"
+                                android:layout_columnWeight="2"
+                                android:layout_gravity="center" />
+                        </GridLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/tableRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="?android:attr/buttonBarStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginVertical="8dp">
+
+                        <Button
+                            android:id="@+id/saveButton"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/save"
+                            android:layout_marginEnd="20dp"
+                            android:backgroundTint="#96D"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="30dp"/>
+
+                        <Button
+                            android:id="@+id/addRowButton"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/add"
+                            android:layout_marginEnd="20dp"
+                            android:backgroundTint="#D69"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="30dp"/>
+
+                        <Button
+                            android:id="@+id/clearButton"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/clear"
+                            android:backgroundTint="#696"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14sp"
+                            android:paddingVertical="12dp"
+                            android:paddingHorizontal="30dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="16dp"
+                        android:background="#e0e0e0">
+
+                        <TextView
+                            android:id="@+id/team1Total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/result1"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:textColor="#000" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#000" />
+
+                        <TextView
+                            android:id="@+id/team2Total"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/result2"
+                            android:textSize="16sp"
+                            android:gravity="center"
+                            android:textColor="#000" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
         </LinearLayout>
 
-        <LinearLayout
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginVertical="8dp">
+        <!-- Navigation Drawer -->
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="280dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            app:menu="@menu/menu_navigation"
+            app:headerLayout="@layout/nav_header"
+            android:background="#FFFFFF"
+            app:itemTextColor="@color/black"
+            app:itemIconTint="@color/black">
 
-            <Button
-                android:id="@+id/saveButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/header_background"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="30dp"/>
-
-            <Button
-                android:id="@+id/addRowButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add"
-                android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/header_background"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="30dp"/>
-
-            <Button
-                android:id="@+id/clearButton"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/clear"
-                android:backgroundTint="@color/header_background"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:paddingVertical="12dp"
-                android:paddingHorizontal="30dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:background="#e0e0e0">
-
-            <TextView
-                android:id="@+id/team1Total"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/result1"
-                android:textSize="16sp"
+                android:orientation="vertical"
+                android:padding="16dp"
                 android:gravity="center"
-                android:textColor="#000" />
+                android:layout_gravity="bottom"
+                android:background="@android:color/white">
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#B0B0B0" />
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#000" />
-
-            <TextView
-                android:id="@+id/team2Total"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/result2"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:textColor="#000" />
-        </LinearLayout>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/appVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="14sp"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:paddingBottom="30dp"
+                    android:paddingTop="20dp"/>
+            </LinearLayout>
+        </com.google.android.material.navigation.NavigationView>
+    </androidx.drawerlayout.widget.DrawerLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

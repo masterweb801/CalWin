@@ -1,13 +1,12 @@
 package com.logicrealm.calwin
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,26 +14,27 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.RecyclerView
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import android.widget.GridLayout
-import java.util.Locale
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
+
 
 data class RowData(
     var team1Score: String,
     var team2Score: String
 )
 
-data class GameData(
-    val round: Int,
-    val team1: String,
-    val team2: String
-)
+//data class GameData(
+//    val round: Int,
+//    val team1: String,
+//    val team2: String
+//)
 
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -42,15 +42,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tot1: TextView
     private lateinit var tot2: TextView
     private lateinit var addBtn: Button
-    private lateinit var gameDataTable: GridLayout
     private var team1Total = 0
     private var team2Total = 0
     private var team1Name = "Team 1"
     private var team2Name = "Team 2"
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var clearBtn: Button
     private lateinit var saveBtn: Button
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var navView: NavigationView
+    private lateinit var toolbar: Toolbar
 
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,6 +64,40 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+
+        toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, R.string.open, R.string.close
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        // Enable the hamburger icon
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
+        // Handle Navigation Item Clicks
+        navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_home -> {
+                    Toast.makeText(this, "Home clicked", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_settings -> {
+                    Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
+                }
+            }
+            drawerLayout.closeDrawers() // Close the drawer after selection
+            true
+        }
+
+        val appVersionTextView: TextView = findViewById(R.id.appVersion)
+        val versionName = getAppVersion()
+        appVersionTextView.text = "Version $versionName"
 
         recyclerView = findViewById(R.id.tableRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -87,74 +125,28 @@ class MainActivity : AppCompatActivity() {
 
         saveBtn.setOnClickListener {
             Toast.makeText(this, "This feature will be implemented in future", Toast.LENGTH_SHORT).show()
-//            saveData(this)
-////            val gameDataListToSave = mutableListOf<GameData>()
-////
-////            // Iterate through rows in the adapter and save data
-////            for (i in adapter.rows.indices) {
-////                val rowData = adapter.rows[i]
-////                val round = i + 1 // Round number (1-based)
-////                val gameData = GameData(round, rowData.team1Score, rowData.team2Score)
-////                gameDataListToSave.add(gameData)
-////            }
-////
-////            // Save the data
-////            saveData(this, gameDataListToSave)
-////            Toast.makeText(this, "Data saved successfully", Toast.LENGTH_SHORT).show()
         }
-
-//        val gameDataList = loadData(this)
-//        Log.d("Got Data", gameDataList.toString())
-//
-//        for (gameData in gameDataList) {
-//            addRowToTable(gameData)
-//        }
 
         updateTotals()
     }
 
-    // Add a row dynamically to the RecyclerView
-    @SuppressLint("InflateParams")
-    private fun addRowToTable(gameData: GameData) {
-        val newRow = layoutInflater.inflate(R.layout.row_item, null)
-        val roundText = newRow.findViewById<TextView>(R.id.roundText)
-        val team1Input = newRow.findViewById<EditText>(R.id.team1Input)
-        val team2Input = newRow.findViewById<EditText>(R.id.team2Input)
-
-        // Set values to views
-        val locale = Locale.getDefault()
-        roundText.text = String.format(locale, "%d", gameData.round)
-        team1Input.setText(gameData.team1)
-        team2Input.setText(gameData.team2)
-
-        // Add row to the table
-        gameDataTable.addView(newRow)
+    private fun getAppVersion(): String? {
+        try {
+            val packageManager = packageManager
+            val packageName = packageName
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            return packageInfo.versionName
+        } catch (e: PackageManager.NameNotFoundException) {
+            return "N/A"
+        }
     }
 
-    private fun saveData(context: Context) {
-        // TODO: for loop to get full data of recycler view
-
-        val data = intArrayOf(7,7)
-
-        sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        val gson = Gson()
-        val json = gson.toJson(data)
-
-        Log.d("Json Data", json)
-
-        editor.putString("game_data", json)
-        editor.apply()
-    }
-
-    private fun loadData(context: Context) {
-        sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-        val json = sharedPreferences.getString("game_data", "[]")
-
-        val gson = Gson()
-        val type = object : TypeToken<List<GameData>>() {}.type
-        return gson.fromJson(json, type)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (toggle.onOptionsItemSelected(item)) {
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -222,7 +214,6 @@ class RowAdapter(private val onRowUpdated: () -> Unit) :
     override fun getItemCount(): Int = rows.size
 
     fun addRow(score1: String = "", score2: String = ""): Boolean {
-        // Validate last row before adding a new one
         if (rows.isNotEmpty()) {
             val lastRow = rows.last()
             if (lastRow.team1Score.isBlank() || lastRow.team2Score.isBlank()) {
